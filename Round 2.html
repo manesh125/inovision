@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3x3 Block Grid with Questions</title>
+    <style>
+		h1{color:white; align-items:center;}
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Background Video */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 1fr;
+            gap: 10px;
+            width: 90%;
+            max-width: 450px;
+            height: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .block {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: #0ac4bb;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 8px;
+            padding: 10px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .block input {
+            width: 90%;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 0.9em;
+        }
+
+        .block button {
+            background-color: #ffffff;
+            color: #0ac4bb;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .locked {
+            background: url('https://plus.unsplash.com/premium_photo-1678103472974-a6435884b194?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bXlzdGVyeXxlbnwwfHwwfHx8MA%3D%3D') no-repeat center center / cover;
+            pointer-events: none;
+            position: relative;
+        }
+
+        .locked::after {
+            content: "🔒";
+            position: absolute;
+            font-size: 2em;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+        }
+		
+		.image-replacement {
+            width: 100%;
+            height: 100%;
+            background-size: no-repeat center center / cover;
+            background-position: center;
+        }
+
+        .locked input,
+        .locked button,
+        .locked div {
+            display: none;
+        }
+
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const answers = ["carrot", "egg", "comb", "Seven", "mushroom", "Three", "g", "shadow", "r"];
+            const blocks = document.querySelectorAll(".block");
+            const nextLevelButton = document.getElementById("next-level");
+
+            blocks.forEach((block, index) => {
+                const question = block.querySelector("div");
+                const input = block.querySelector("input");
+                const button = block.querySelector("button");
+                
+                if (index > 0) {
+                    block.classList.add("locked");
+                    question.classList.add("hidden");
+                }
+
+                button.addEventListener("click", () => {
+                    if (input.value.trim().toLowerCase() === answers[index].toLowerCase()) {
+                        block.innerHTML = `<div class="image-replacement" style="background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA09xPglouIIYrs5TFGfMDKaikdi_FgZFreA&s') no-repeat center center / cover;"></div>`;
+                        
+                        if (index + 1 < blocks.length) {
+                            const nextBlock = blocks[index + 1];
+                            nextBlock.classList.remove("locked");
+                            nextBlock.querySelector("div").classList.remove("hidden");
+                        } else {
+                            nextLevelButton.style.display = "block";
+                        }
+                    } else {
+                        alert("Incorrect answer. Try again!");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+	<h1>   Treasure <br>    Thunder</h1>
+    <video autoplay muted loop class="video-background">
+        <source src="https://www.dropbox.com/scl/fi/5glr9aq4d3yu4hk84xjgp/BG.mp4?rlkey=rwxrcgkerq7wlhch1tvnr9zsh&st=b5hzqlcg&dl=1" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="grid">
+        <div class="block"><div>Question 1: What is orange, wears a green hat, and sounds like a parrot?</div><input type="text" placeholder="Your answer here"><button>Submit</button></div>
+        <div class="block"><div>Question 2: What is more useful when it is broken?</div><input type="text" placeholder="Your answer here"><button>Submit</button></div>
+        <div class="block"><div>Question 3: What has many teeth, but can’t bite?</div><input type="text" placeholder="Your answer here"><button>Submit</button></div>
+        <div class="block"><div>Question 4: I am an odd number. Take away a letter and I become even. What number am I?</div><input type="text" placeholder="Your answer here"><button>Submit</button></div>
+        <div class="block"><div>Question 5: What kind of room has no doors, walls, or windows?</div><input type="text" placeholder="Your answer here"><button>Submit</button></div>
+        <div class="block"><div>Question 6: A little girl goes to the store and buys one dozen eggs. As she is going home, all but three break. How many eggs are left unbroken</div><input type="text" placeholder="Your answer here"><button>Submit</button></div>
+        <div class="block"><div>Question 7: What is the end of everything?</div><input type="text" placeholder="Your answer here"><button>Submit</button></div>
+        <div class="block"><div>Question 8: I follow you all the time and copy your every move, but you can’t touch me or catch me. What am I?</div><input type="text" placeholder="Your answer here"><button>Submit</button></div>
+        <div class="block"><div>Question 9: What is seen in the middle of March and April that can't be seen at the beginning or end of either month?</div><input type="text" placeholder="Your answer here"><button>Submit</button></div>
+    </div>
+</body>
+</html>
